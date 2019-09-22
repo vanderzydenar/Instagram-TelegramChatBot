@@ -1,18 +1,20 @@
 import time
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 from instagram_bot import InstagramBot
 from telegram_bot import TelegramBot
 
-engagement_limit = 30
+engagement_limit = 24
 
-#Turn back on nd liking photos
-#Check to make sure title does not contain 'Page not found'
+#make sure that 30 other hrefs have been added before going again
 
-ig = InstagramBot()
-latest_post = ig.get_latest()
 
-tb = TelegramBot()
-post_list = tb.get_posts(engagement_limit)
-tb.engage_posts(engagement_limit, post_list)
-tb.post_latest('yeet')
+
+while True:
+    #print ('Waiting 1 hour...')
+    #time.sleep(3600)
+    ig = InstagramBot()
+    latest_post = ig.get_latest()
+
+    tb = TelegramBot()
+    post_list = tb.get_posts()
+    tb.engage_posts(engagement_limit, post_list)
+    tb.post_latest(latest_post, engagement_limit)
